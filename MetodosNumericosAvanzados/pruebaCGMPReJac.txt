@@ -1,0 +1,5 @@
+CGM report
+Precondition with: Jacobi Preconditioner
+Iterations: 8
+Error: 1.72036e-07
+Time elapse: 0.025143 msec

@@ -1,0 +1,4 @@
+CGM report
+Iterations: 13
+Error: 2.58221e-07
+Time elapse: 0.037365 msec
