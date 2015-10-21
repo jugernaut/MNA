@@ -39,7 +39,7 @@ void MatrizDensa::JacobiIter(std::vector<double>& x, const std::vector<double>& 
 }
 
 MatrizDensa const& MatrizDensa::operator=(MatrizDensa const &rhs) {
-    if (this != &rhs) { // && Row==rhs.Row && Col==rhs.Col)
+    if (this != &rhs) {
         A=rhs.A;
         Col=rhs.Col;
         Row=rhs.Row;
