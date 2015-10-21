@@ -1,15 +1,15 @@
-#include "../include/Matrix_CRS.hpp"
+#include "../include/MatrizCRS.hpp"
 #include <iostream>
 
-Matrix_CRS::Matrix_CRS(int n) {
+MatrizCRS::MatrizCRS(int n) {
     nnz=0;
     Col=Row=n;
 }
 
-void Matrix_CRS::initialize() {
+void MatrizCRS::initialize() {
 
 }
-void Matrix_CRS::print() {
+void MatrizCRS::print() {
     std::cout<<std::endl<<"Data: [";
     for (std::vector<double>::iterator it = data.begin() ; it != data.end(); ++it)
         std::cout <<""<< *it<<", ";
@@ -26,13 +26,13 @@ void Matrix_CRS::print() {
     std::cout<<" ]"<<std::endl;
 
 }
-void Matrix_CRS::convert(const Matrix_COO& coo) {
-    Matrix_CSC aux(coo.Row);
+void MatrizCRS::convert(const MatrizCOO& coo) {
+    MatrizCSC aux(coo.Row);
     aux.convert(coo);
     convertCCStoCRS(aux);
 }
 
-void Matrix_CRS::convertCCStoCRS(const Matrix_CSC& csc) {
+void MatrizCRS::convertCCStoCRS(const MatrizCSC& csc) {
     nnz=csc.nnz;
     Col=Row=csc.Col;
     data.resize(nnz);
@@ -97,7 +97,7 @@ void Matrix_CRS::convertCCStoCRS(const Matrix_CSC& csc) {
     idiagCalculate();
 }
 
-std::vector<double> Matrix_CRS::operator * (const std::vector<double>& V) {
+std::vector<double> MatrizCRS::operator * (const std::vector<double>& V) {
     if (Row!=V.size()) {
         std::cout<<"Error en las dimensiones"<<std::endl;
         exit (1);
@@ -112,7 +112,7 @@ std::vector<double> Matrix_CRS::operator * (const std::vector<double>& V) {
     return y;
 }
 
-Matrix_CRS const& Matrix_CRS::operator=(Matrix_CRS const &rhs) {
+MatrizCRS const& MatrizCRS::operator=(MatrizCRS const &rhs) {
     if (this != &rhs) { // && Row==rhs.Row && Col==rhs.Col)
         Col=rhs.Col;
         Row=rhs.Row;
@@ -125,7 +125,7 @@ Matrix_CRS const& Matrix_CRS::operator=(Matrix_CRS const &rhs) {
     return *this;
 }
 
-void Matrix_CRS::JacobiIter(std::vector<double>& x0, const std::vector<double>& b) {
+void MatrizCRS::JacobiIter(std::vector<double>& x0, const std::vector<double>& b) {
     std::vector<double> x;
     x=b;
     int j;
@@ -144,7 +144,7 @@ void Matrix_CRS::JacobiIter(std::vector<double>& x0, const std::vector<double>& 
     x0=x;
 }
 
-void Matrix_CRS::idiagCalculate() {
+void MatrizCRS::idiagCalculate() {
     int j;
     for (int i = 0; i < Row; ++i) {
         for (int l = irow[i]; l <= irow[i+1]-1; ++l) {
@@ -156,8 +156,8 @@ void Matrix_CRS::idiagCalculate() {
     }
 }
 
-Matrix_CRS Matrix_CRS::diag() {
-    Matrix_CRS D;
+MatrizCRS MatrizCRS::diag() {
+    MatrizCRS D;
     for (int i = 0; i < Row; ++i) {
         D.col.push_back(i);
         D.irow.push_back(i);
@@ -169,9 +169,9 @@ Matrix_CRS Matrix_CRS::diag() {
     return D;
 }
 
-Matrix_CRS Matrix_CRS::ILU() {
+MatrizCRS MatrizCRS::ILU() {
     //aqui se copia A a LU
-    Matrix_CRS LU;
+    MatrizCRS LU;
     LU = *this;
     int k,lli,llk,ji,jk;
     double Lik;
@@ -206,9 +206,9 @@ Matrix_CRS Matrix_CRS::ILU() {
     return LU;
 }
 
-Matrix_CRS Matrix_CRS::MILU() {
+MatrizCRS MatrizCRS::MILU() {
     //aqui se copia A a LU
-    Matrix_CRS LU;
+    MatrizCRS LU;
     LU = *this;
     int k,lli,llk,ji,jk;
     double Lik;
@@ -244,7 +244,7 @@ Matrix_CRS Matrix_CRS::MILU() {
     return LU;
 }
 
-void Matrix_CRS::JacobiSolve(std::vector<double> & z, const std::vector<double>& r) {
+void MatrizCRS::JacobiSolve(std::vector<double> & z, const std::vector<double>& r) {
     for (int i = 0; i < Row; ++i) {
         //std::cout<<r[i]<<"/"<<data[i]<<std::endl;
         z[i]=r[i]/data[idiag[i]];
@@ -252,7 +252,7 @@ void Matrix_CRS::JacobiSolve(std::vector<double> & z, const std::vector<double>&
     }
 }
 
-void Matrix_CRS::LUSolve(std::vector<double> & z, const std::vector<double>& r) {
+void MatrizCRS::LUSolve(std::vector<double> & z, const std::vector<double>& r) {
     std::vector<double> y;
     y.resize(Row);
     //hacia adelante

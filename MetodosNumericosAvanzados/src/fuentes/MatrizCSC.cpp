@@ -1,15 +1,15 @@
-#include "../include/Matrix_CSC.hpp"
+#include "../include/MatrizCSC.hpp"
 #include <iostream>
 
-Matrix_CSC::Matrix_CSC(int n) {
+MatrizCSC::MatrizCSC(int n) {
     nnz=0;
     Col=Row=n;
 }
 
-void Matrix_CSC::initialize() {
+void MatrizCSC::initialize() {
 }
 
-void Matrix_CSC::print() {
+void MatrizCSC::print() {
     std::cout<<std::endl<<"Data: [";
     for (std::vector<double>::iterator it = data.begin() ; it != data.end(); ++it)
         std::cout <<""<< *it<<", ";
@@ -26,7 +26,7 @@ void Matrix_CSC::print() {
     std::cout<<" ]"<<std::endl;
 }
 
-std::vector<double> Matrix_CSC::operator * (const std::vector<double>& V) {
+std::vector<double> MatrizCSC::operator * (const std::vector<double>& V) {
     if (Row!=V.size()) {
         std::cout<<"Error en las dimensiones"<<std::endl;
         exit (1);
@@ -41,7 +41,7 @@ std::vector<double> Matrix_CSC::operator * (const std::vector<double>& V) {
     return y;
 }
 
-void Matrix_CSC::convert(const Matrix_COO & coo) {
+void MatrizCSC::convert(const MatrizCOO & coo) {
     nnz=coo.nnz;
     Col=Row=coo.Col;
     data.resize(nnz);
@@ -73,6 +73,6 @@ void Matrix_CSC::convert(const Matrix_COO & coo) {
     }
 }
 
-void Matrix_CSC::JacobiIter(std::vector<double>& x, const std::vector<double>& b) {
+void MatrizCSC::JacobiIter(std::vector<double>& x, const std::vector<double>& b) {
     std::cout<<"JacobiIter csc"<<std::endl;
 }

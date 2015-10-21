@@ -1,10 +1,10 @@
 #ifndef __ICHOL__
 #define __ICHOL__
 
-#include "../include/Preconditioner.hpp"
+#include "../include/Precondicionador.hpp"
 
 template <class T>
-class ICHOL : public Preconditioner {
+class ICHOL : public Precondicionador {
 public:
     T mat;
     ICHOL(void) {
@@ -18,7 +18,7 @@ public:
         mat.CholSolve(z,r);
     }
     std::string name() {
-        return "ICHOL Preconditioner";
+        return "ICHOL Precondicionador";
     }
 };
 

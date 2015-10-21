@@ -1,9 +1,9 @@
 #ifndef __MatrizCDS__
 #define __MatrizCDS__
 
-#include "../include/Matrix_base.hpp"
+#include "../include/MatrizBase.hpp"
 
-class MatrizCDS : public Matrix_base {
+class MatrizCDS : public MatrizBase {
 public:
     /****Atributos*******/
     double **A;
@@ -11,7 +11,7 @@ public:
     std::vector<int> identificacionbandas;
 
     /****Métodos*******/
-    MatrizCDS(void): Matrix_base() {
+    MatrizCDS(void): MatrizBase() {
         dimension=0;
         Col=0;
         Row=0;

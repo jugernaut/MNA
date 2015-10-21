@@ -1,15 +1,15 @@
-#ifndef __solverDirect__
-#define __solverDirect__
+#ifndef __SolverDirect__
+#define __SolverDirect__
 
-#include "../include/solver.hpp"
+#include "../include/Solver.hpp"
 
 
-class solverDirect : public solver {
+class SolverDirect : public Solver {
 public:
     bool ModifyMatrix;
-    solverDirect(void) {
+    SolverDirect(void) {
     }
-    ~solverDirect() {
+    ~SolverDirect() {
     }
 };
 

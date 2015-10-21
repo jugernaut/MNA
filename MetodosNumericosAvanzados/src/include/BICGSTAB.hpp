@@ -1,10 +1,10 @@
 #ifndef __BiCGSTAB__
 #define __BiCGSTAB__
-#include "../include/solverIter.hpp"
+#include "../include/SolverIterativo.hpp"
 
-class BICGSTAB : public solverIter {
+class BICGSTAB : public SolverIterativo {
 public:
-    BICGSTAB(void): solverIter() {
+    BICGSTAB(void): SolverIterativo() {
     }
     ~BICGSTAB() {
     }

@@ -1,9 +1,9 @@
 #ifndef __CHOLESKY__
 #define _CHOLESKY__
 
-#include "../include/solver.hpp"
+#include "../include/Solver.hpp"
 
-class CHOLESKY : public solver {
+class CHOLESKY : public Solver {
 public:
     CHOLESKY(void) {
     }

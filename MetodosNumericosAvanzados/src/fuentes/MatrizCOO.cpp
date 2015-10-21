@@ -1,17 +1,17 @@
-#include "../include/Matrix_COO.hpp"
+#include "../include/MatrizCOO.hpp"
 #include <iostream>
 
 
-Matrix_COO::Matrix_COO(int n) {
+MatrizCOO::MatrizCOO(int n) {
     nnz=0;
     Col=Row=n;
 }
 
-void Matrix_COO::initialize() {
+void MatrizCOO::initialize() {
     //parece que no es necesaria
 }
 
-void Matrix_COO::print() {
+void MatrizCOO::print() {
     std::cout<<std::endl<<"Data: [";
     for (std::vector<double>::iterator it = data.begin() ; it != data.end(); ++it)
         std::cout <<""<< *it<<", ";
@@ -28,14 +28,14 @@ void Matrix_COO::print() {
     std::cout<<" ]"<<std::endl;
 }
 
-void Matrix_COO::insert(int i, int j, double val) {
+void MatrizCOO::insert(int i, int j, double val) {
     data.push_back(val);
     col.push_back(j);
     row.push_back(i);
     nnz++;
 }
 
-std::vector<double> Matrix_COO::operator * (const std::vector<double>& V) {
+std::vector<double> MatrizCOO::operator * (const std::vector<double>& V) {
     if (Row!=V.size()) {
         std::cout<<"Error en las dimensiones"<<std::endl;
         exit (1);
@@ -48,7 +48,7 @@ std::vector<double> Matrix_COO::operator * (const std::vector<double>& V) {
     return y;
 }
 
-void Matrix_COO::convert(const Matrix_dense& MD) { //opcional o de mejor entendimiento que es un constructor "convertidor"
+void MatrizCOO::convert(const MatrizDensa& MD) { //opcional o de mejor entendimiento que es un constructor "convertidor"
     for (int i = 0; i < Row; ++i) {
         for (int j = 0; j < Col; ++j) {
             if(MD.A[i][j]!=0) {
@@ -61,6 +61,6 @@ void Matrix_COO::convert(const Matrix_dense& MD) { //opcional o de mejor entendi
     }
 }
 
-void Matrix_COO::JacobiIter(std::vector<double>& x, const std::vector<double>& b) {
+void MatrizCOO::JacobiIter(std::vector<double>& x, const std::vector<double>& b) {
     std::cout<<"JacobiIter coo"<<std::endl;
 }

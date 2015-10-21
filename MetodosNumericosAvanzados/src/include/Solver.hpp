@@ -1,7 +1,7 @@
-#ifndef __solver__
-#define __solver__
+#ifndef __Solver__
+#define __Solver__
 
-#include "../include/Matrix_base.hpp"
+#include "../include/MatrizBase.hpp"
 #include "../include/Funciones.hpp"
 #include "../include/Timer.hpp"
 #include <vector>
@@ -9,12 +9,12 @@
 #include <math.h>
 #include <fstream>
 
-class solver {
+class Solver {
 public:
     Timer timer;
-    solver(void) {
+    Solver(void) {
     }
-    ~solver() {
+    ~Solver() {
     }
 };
 

@@ -1,11 +1,11 @@
-#ifndef __Matrix_CRS__
-#define __Matrix_CRS__
+#ifndef __MatrizCRS__
+#define __MatrizCRS__
 
-#include "../include/Matrix_base.hpp"
-#include "../include/Matrix_COO.hpp"
-#include "../include/Matrix_CSC.hpp"
+#include "../include/MatrizBase.hpp"
+#include "../include/MatrizCOO.hpp"
+#include "../include/MatrizCSC.hpp"
 
-class Matrix_CRS : public Matrix_base {
+class MatrizCRS : public MatrizBase {
 public:
     /****Atributos*******/
     std::vector<double> data;
@@ -15,26 +15,26 @@ public:
     int nnz;
 
     /****Métodos*******/
-    Matrix_CRS(void): Matrix_base() {
+    MatrizCRS(void): MatrizBase() {
         data.resize(0);
         col.resize(0);
         irow.resize(0);
     }
-    Matrix_CRS(int);
-    ~Matrix_CRS() {
+    MatrizCRS(int);
+    ~MatrizCRS() {
     }
     void initialize();
     void print();
-    void convert(const Matrix_COO&);
-    void convertCCStoCRS(const Matrix_CSC&);
+    void convert(const MatrizCOO&);
+    void convertCCStoCRS(const MatrizCSC&);
     std::vector<double> operator * (const std::vector<double>&);
-    Matrix_CRS const &operator=(Matrix_CRS const&);
+    MatrizCRS const &operator=(MatrizCRS const&);
     void JacobiIter(std::vector<double>&, const std::vector<double>&);
     void idiagCalculate();
-    Matrix_CRS diag();
-    Matrix_CRS ILU();
-    Matrix_CRS MILU();
-    Matrix_CRS ICHOL();
+    MatrizCRS diag();
+    MatrizCRS ILU();
+    MatrizCRS MILU();
+    MatrizCRS ICHOL();
     void JacobiSolve(std::vector<double>& , const std::vector<double>&);
     void LUSolve(std::vector<double>& , const std::vector<double>&);
 };

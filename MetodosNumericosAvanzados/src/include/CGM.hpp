@@ -1,11 +1,11 @@
 #ifndef __CGM__
 #define __CGM__
 
-#include "../include/solverIter.hpp"
+#include "../include/SolverIterativo.hpp"
 
-class CGM : public solverIter {
+class CGM : public SolverIterativo {
 public:
-    CGM(void):solverIter() {
+    CGM(void):SolverIterativo() {
     }
     ~CGM() {
     }

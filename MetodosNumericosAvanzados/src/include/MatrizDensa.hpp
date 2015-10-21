@@ -1,26 +1,26 @@
-#ifndef __Matrix_dense__
-#define __Matrix_dense__
+#ifndef __MatrizDensa__
+#define __MatrizDensa__
 
-#include "../include/Matrix_base.hpp"
+#include "../include/MatrizBase.hpp"
 #include <iostream>
 
-class Matrix_dense : public Matrix_base {
+class MatrizDensa : public MatrizBase {
 public:
     /****Atributos*******/
     std::vector<std::vector<double> > A;
 
     /****Métodos*******/
-    Matrix_dense(void): Matrix_base() {
+    MatrizDensa(void): MatrizBase() {
         A.resize( Row , std::vector<double>( Col) );
     }
-    ~Matrix_dense() {
+    ~MatrizDensa() {
     }
     void inicializa(int, int, double);
     void print();
     std::vector<double> operator * (const std::vector<double>&);
     void JacobiIter(std::vector<double>&, const std::vector<double>&);
-    Matrix_dense const &operator=(Matrix_dense const&);
-    Matrix_dense diag();
+    MatrizDensa const &operator=(MatrizDensa const&);
+    MatrizDensa diag();
     void forwardBackward(std::vector<double>&, const std::vector<double>&);
 };
 

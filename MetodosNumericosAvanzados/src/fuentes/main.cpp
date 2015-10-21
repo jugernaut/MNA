@@ -1,12 +1,12 @@
-#include "../include/Matrix_dense.hpp"
-#include "../include/Matrix_COO.hpp"
-#include "../include/Matrix_CRS.hpp"
-#include "../include/Matrix_CSC.hpp"
+#include "../include/MatrizDensa.hpp"
+#include "../include/MatrizCOO.hpp"
+#include "../include/MatrizCRS.hpp"
+#include "../include/MatrizCSC.hpp"
 #include "../include/MatrizCDS.hpp"
 #include "../include/CGM.hpp"
 #include "../include/Jacobi.hpp"
 #include "../include/BICGSTAB.hpp"
-#include "../include/JacobiPreconditioner.hpp"
+#include "../include/JacobiPrecondicionado.hpp"
 #include "../include/ILU.hpp"
 #include "../include/MILU.hpp"
 #include <iostream>
@@ -17,7 +17,7 @@ using namespace std;
 
 
 int main(int argc, char const *argv[]) {
-    Matrix_dense dense;
+    MatrizDensa dense;
     int n=4;
     dense.inicializa(n,n,0.0);
     std::vector<double> v,v1;
@@ -34,7 +34,7 @@ int main(int argc, char const *argv[]) {
     printVector(r);
 
     cout<<endl<<"COO matrix: "<<endl;
-    Matrix_COO coo(n);
+    MatrizCOO coo(n);
     coo.convert(dense);
     coo.print();
     std::vector<double> cooXv;
@@ -43,7 +43,7 @@ int main(int argc, char const *argv[]) {
     printVector(cooXv);
 
 
-    Matrix_CSC csc(n);
+    MatrizCSC csc(n);
     csc.convert(coo);
     cout<<endl<<"CSC Matrix: "<<endl;
     csc.print();
@@ -52,7 +52,7 @@ int main(int argc, char const *argv[]) {
     cout<<endl<<"csc x v: "<<endl;
     printVector(cscXv);
 
-    Matrix_CRS crs;
+    MatrizCRS crs;
     //crs.convertCCStoCRS(csc);
     crs.convert(coo);
     cout<<endl<<"CRS matrix: "<<endl;
@@ -72,8 +72,8 @@ int main(int argc, char const *argv[]) {
     b[2]=-11;
     b[3]=15.0;
 
-    ////////////////////////////////////////////////////SOLVERS/////////////////////////////////////////
-    cout<<endl<<"----------------------SOLVERS----------------------------"<<endl;
+    ////////////////////////////////////////////////////SolverS/////////////////////////////////////////
+    cout<<endl<<"----------------------SolverS----------------------------"<<endl;
 
     cout<<"b: ";
     printVector(b);
@@ -112,8 +112,8 @@ int main(int argc, char const *argv[]) {
     cout<<endl<<endl;
 
     //////////////////////////////////////////////////precondicionadores////////////////////////////
-    cout<<endl<<"----------------------Preconditioners  CGM Jacobi----------------------------"<<endl;
-    JacobiPreconditioner<Matrix_CRS> jacp2;
+    cout<<endl<<"----------------------Precondicionadors  CGM Jacobi----------------------------"<<endl;
+    JacobiPrecondicionado<MatrizCRS> jacp2;
     jacp2.calculate(crs);
     x[0]=.6;
     x[1]=2.2727;
@@ -125,9 +125,9 @@ int main(int argc, char const *argv[]) {
     printVector(x);
     cout<<endl<<endl;
 
-    cout<<endl<<"----------------------Preconditioners  ilu CGM----------------------------"<<endl;
+    cout<<endl<<"----------------------Precondicionadors  ilu CGM----------------------------"<<endl;
 
-    ILU<Matrix_CRS> ilu;
+    ILU<MatrizCRS> ilu;
     ilu.calculate(crs);
     x[0]=.6;
     x[1]=2.2727;
@@ -139,8 +139,8 @@ int main(int argc, char const *argv[]) {
     printVector(x);
     cout<<endl<<endl;
 
-    cout<<endl<<"----------------------Preconditioners  milu CGM----------------------------"<<endl;
-    MILU<Matrix_CRS> milu;
+    cout<<endl<<"----------------------Precondicionadors  milu CGM----------------------------"<<endl;
+    MILU<MatrizCRS> milu;
     milu.calculate(crs);
     milu.mat.print();
     x[0]=.6;
@@ -153,8 +153,8 @@ int main(int argc, char const *argv[]) {
     printVector(x);
     cout<<endl<<endl;
 
-    cout<<endl<<"----------------------Preconditioners  BICGSTAB Jacobi----------------------------"<<endl;
-    JacobiPreconditioner<Matrix_CRS> jacpBIG;
+    cout<<endl<<"----------------------Precondicionadors  BICGSTAB Jacobi----------------------------"<<endl;
+    JacobiPrecondicionado<MatrizCRS> jacpBIG;
     jacpBIG.calculate(crs);
     x[0]=.6;
     x[1]=2.2727;
@@ -166,9 +166,9 @@ int main(int argc, char const *argv[]) {
     printVector(x);
     cout<<endl<<endl;
 
-    cout<<endl<<"----------------------Preconditioners  BICGSTAB ILU----------------------------"<<endl;
+    cout<<endl<<"----------------------Precondicionadors  BICGSTAB ILU----------------------------"<<endl;
 
-    ILU<Matrix_CRS> iluBIG;
+    ILU<MatrizCRS> iluBIG;
     iluBIG.calculate(crs);
     x[0]=.6;
     x[1]=2.2727;
@@ -180,10 +180,10 @@ int main(int argc, char const *argv[]) {
     printVector(x);
     cout<<endl<<endl;
 
-    cout<<endl<<"----------------------Preconditioners  BICGSTAB MILU----------------------------"<<endl;
+    cout<<endl<<"----------------------Precondicionadors  BICGSTAB MILU----------------------------"<<endl;
 
 
-    MILU<Matrix_CRS> miluBIG;
+    MILU<MatrizCRS> miluBIG;
     miluBIG.calculate(crs);
     x[0]=.6;
     x[1]=2.2727;

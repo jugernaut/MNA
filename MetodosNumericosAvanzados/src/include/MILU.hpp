@@ -1,10 +1,10 @@
 #ifndef __MILU__
 #define __MILU__
 
-#include "../include/Preconditioner.hpp"
+#include "../include/Precondicionador.hpp"
 
 template <class T>
-class MILU : public Preconditioner {
+class MILU : public Precondicionador {
 public:
     T mat;
     MILU(void) {
@@ -18,7 +18,7 @@ public:
         mat.LUSolve(z,r);
     }
     std::string name() {
-        return "MILU Preconditioner";
+        return "MILU Precondicionador";
     }
 };
 

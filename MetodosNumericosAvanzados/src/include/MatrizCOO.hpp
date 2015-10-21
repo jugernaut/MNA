@@ -1,29 +1,31 @@
-#ifndef __Matrix_CSC__
-#define __Matrix_CSC__
+#ifndef __MatrizCOO__
+#define __MatrizCOO__
 
-#include "../include/Matrix_base.hpp"
-#include "../include/Matrix_COO.hpp"
+#include "../include/MatrizBase.hpp"
+#include "../include/MatrizDensa.hpp"
 
-class Matrix_CSC : public Matrix_base {
+class MatrizCOO : public MatrizBase {
 public:
     /****Atributos*******/
     std::vector<double> data;
     std::vector<int> row;
-    std::vector<int> icol;
+    std::vector<int> col;
     int nnz;
 
     /****Métodos*******/
-    Matrix_CSC(void): Matrix_base() {
+    MatrizCOO(void): MatrizBase() {
         data.resize(0);
         row.resize(0);
-        icol.resize(0);
+        col.resize(0);
+        nnz=0;
     }
-    Matrix_CSC(int);
-    ~Matrix_CSC() {
+    MatrizCOO(int);
+    ~MatrizCOO() {
     }
-    void convert(const Matrix_COO &);
+    void convert(const MatrizDensa &);
     void initialize();
     void print();
+    void insert(int, int, double);
     std::vector<double> operator * (const std::vector<double>&);
     void JacobiIter(std::vector<double>&, const std::vector<double>&);
 };

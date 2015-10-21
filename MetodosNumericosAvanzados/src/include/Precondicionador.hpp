@@ -1,18 +1,18 @@
-#ifndef __Preconditioner__
-#define __Preconditioner__
+#ifndef __Precondicionador__
+#define __Precondicionador__
 
 #include "../include/Timer.hpp"
 #include <vector>
 #include <iostream>
 #include <string>
 
-class Preconditioner {
+class Precondicionador {
 public:
     Timer timer;
-    Preconditioner(void) {
+    Precondicionador(void) {
 
     }
-    ~Preconditioner() {
+    ~Precondicionador() {
 
     }
 

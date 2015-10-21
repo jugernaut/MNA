@@ -1,11 +1,11 @@
 #ifndef __Jacobi__
 #define __Jacobi__
 
-#include "../include/solverIter.hpp"
+#include "../include/SolverIterativo.hpp"
 
-class Jacobi : public solverIter {
+class Jacobi : public SolverIterativo {
 public:
-    Jacobi(void):solverIter() {
+    Jacobi(void):SolverIterativo() {
     }
     ~Jacobi() {
     }

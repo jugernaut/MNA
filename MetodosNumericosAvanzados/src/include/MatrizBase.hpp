@@ -1,16 +1,16 @@
-#ifndef __Matrix_base__
-#define __Matrix_base__
+#ifndef __MatrizBase__
+#define __MatrizBase__
 
 //#include <iostream>
 #include <vector>
 #include "../include/Funciones.hpp"
 
-class Matrix_base {
+class MatrizBase {
 public:
     int Col;
     int Row;
 
-    Matrix_base(void) {
+    MatrizBase(void) {
         Col=0;
         Row=0;
     }

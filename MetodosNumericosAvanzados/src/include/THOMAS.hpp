@@ -1,9 +1,9 @@
 #ifndef __THOMAS__
 #define _THOMAS__
 
-#include "../include/solver.hpp"
+#include "../include/Solver.hpp"
 
-class THOMAS : public solver {
+class THOMAS : public Solver {
 public:
     THOMAS(void) {
     }

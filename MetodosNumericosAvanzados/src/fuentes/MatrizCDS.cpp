@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <iostream>
 
-MatrizCDS::MatrizCDS(int NuevoN, int numBandasSup, int numBandasInf, std::vector<int> &indices): Matrix_base() {
+MatrizCDS::MatrizCDS(int NuevoN, int numBandasSup, int numBandasInf, std::vector<int> &indices): MatrizBase() {
 
     p = numBandasSup; //numero de diagonales sobre la diagonal principal distintas de cero
     q = numBandasInf; //numero de diagonales bajo la diagonal principal distintas de cero

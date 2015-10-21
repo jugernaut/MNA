@@ -1,4 +1,4 @@
 BICGSTAB report
 Iterations: 5
 Error: 3.51903e-20
-Time elapse: 0.040438 msec
+Time elapse: 0.028146 msec

@@ -1,10 +1,10 @@
-#ifndef __solverIter__
-#define __solverIter__
+#ifndef __SolverIterativo__
+#define __SolverIterativo__
 
-#include "../include/solver.hpp"
+#include "../include/Solver.hpp"
 #include "../include/Timer.hpp"
 
-class solverIter : public solver {
+class SolverIterativo : public Solver {
 public:
     int mits;
     int mmaxIts;
@@ -13,14 +13,14 @@ public:
     double merror;
     bool precond=false;
     std::string namep;
-    solverIter(void) {
+    SolverIterativo(void) {
         mmaxIts = 2000;
         mtol = 1e-6;
         mits = 0;
         merror = 0;
         etime = 0;
     }
-    ~solverIter() {
+    ~SolverIterativo() {
     }
     void maxIts(int it) {
         mmaxIts = it;
