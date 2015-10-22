@@ -17,16 +17,9 @@ public:
         int n = x.size();
         mits=0;
 
-        /*Vector r(n);
-        Vector p(n);
-        Vector Ap(n);*/
-
-        std::vector<double> r;
-        r.resize(n);
-        std::vector<double> p;
-        p.resize(n);
-        std::vector<double> Ap;
-        Ap.resize(n);
+        std::vector<double> r(n);
+        std::vector<double> p(n);
+        std::vector<double> Ap(n);
 
         double alpha;
         double beta;

@@ -1,4 +1,4 @@
 BICGSTAB report
-Iteraciones: 890
-Error: 9.17988e-07
-Tiempo transcurrido: 68322.6 msec
+Iteraciones: 2
+Error: 3.10047e-10
+Tiempo transcurrido: 0.009429 msec

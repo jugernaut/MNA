@@ -17,7 +17,7 @@
 using namespace std;
 
 int main(int argc, char const *argv[]) {
-	int nx=1001;
+	int nx=6;
 	int ny=nx;
 	double dx = 1./nx;
 	int n = (nx - 1)*(ny - 1);     //dimension del sistema a resolver
@@ -78,22 +78,14 @@ int main(int argc, char const *argv[]) {
 	big.report("pruebaBIG");
 	cout<<endl<<"---------------------------------------------------------"<<endl;
 
-	cout<<endl<<"------------------Precondicionados-----------------------"<<endl;
+	cout<<endl<<"---------------Solvers Precondicionados------------------"<<endl;
 
 	x.resize(n);
 	JacobiPrecondicionado<MatrizCRS> jacp1;
 	jacp1.calculate(A);
 	CGM cgm1;
-	cgm.solve(A,x,b,jacp1);
-	cgm.report("pruebaCGMPreJac");
-	cout<<endl<<"---------------------------------------------------------"<<endl;
-
-	x.resize(n);
-	ICHOL<MatrizCRS> ichol1;
-	ichol1.calculate(A);
-	CGM cgm2;
-	cgm2.solve(A,x,b,ichol1);
-	cgm2.report("pruebaCGMPreIchol");
+	cgm1.solve(A,x,b,jacp1);
+	cgm1.report("pruebaCGMPreJac");
 	cout<<endl<<"---------------------------------------------------------"<<endl;
 
 	x.resize(n);
@@ -121,14 +113,6 @@ int main(int argc, char const *argv[]) {
 	cout<<endl<<"---------------------------------------------------------"<<endl;
 
 	x.resize(n);
-	ICHOL<MatrizCRS> ichol2;
-	ichol2.calculate(A);
-	BICGSTAB big2;
-	big2.solve(A,x,b,ichol2);
-	big2.report("pruebaBICGSTABPreIchol");
-	cout<<endl<<"---------------------------------------------------------"<<endl;
-
-	x.resize(n);
 	ILU<MatrizCRS> ilu2;
 	ilu2.calculate(A);
 	BICGSTAB big3;
@@ -143,6 +127,24 @@ int main(int argc, char const *argv[]) {
 	big4.solve(A,x,b,milu2);
 	big4.report("pruebaBICGSTABPreMILU");
 	cout<<endl<<"---------------------------------------------------------"<<endl;
+
+	/*
+	x.resize(n);
+	ICHOL<MatrizCRS> ichol1;
+	ichol1.calculate(A);
+	CGM cgm2;
+	cgm2.solve(A,x,b,ichol1);
+	cgm2.report("pruebaCGMPreIchol");
+	cout<<endl<<"---------------------------------------------------------"<<endl;
+
+	x.resize(n);
+	ICHOL<MatrizCRS> ichol2;
+	ichol2.calculate(A);
+	BICGSTAB big2;
+	big2.solve(A,x,b,ichol2);
+	big2.report("pruebaBICGSTABPreIchol");
+	cout<<endl<<"---------------------------------------------------------"<<endl;
+	*/
 
 	return 0;
 }
