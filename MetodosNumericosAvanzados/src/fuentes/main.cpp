@@ -9,11 +9,47 @@
 #include "../include/JacobiPrecondicionado.hpp"
 #include "../include/ILU.hpp"
 #include "../include/MILU.hpp"
+#include "../include/ICHOL.hpp"
 #include <iostream>
 #include <string>
 
 
 using namespace std;
+
+   /*{
+    Timer timer;                   //mide tiempo de ejecucion
+
+   //llena matriz COO
+   cout<< endl << "Tamanio de problema " << n << "x" <<n<<endl<<endl;
+   int l = 0;
+      COO Acoo(n);                 //matriz temporal en formato de coordenadas
+      timer.tic();                 //comienza a medir tiempo
+      for(int j=1;j<ny;++j)
+      {
+         for(int i=1;i<nx;++i)
+         {
+             // prototipo de funcion de insertar void insert(int i,int j,doble val);
+             if(j>1)
+                Acoo.insert(l, l-(nx-1),-1.);
+             if(i>1)
+                Acoo.insert(l, l-1,-1.);
+             Acoo.insert(l, l,4.);
+             if(i<nx-1)
+                Acoo.insert(l, l+1,-1.);
+             if(j<ny-1)
+                Acoo.insert(l, l+(ny-1),-1.);
+             ++l;
+         }
+      }
+      timer.toc();                 //termina de medir tiempo
+      std::cout << "Tiempo de llenado de matriz   COO: " << timer.etime() << " ms" << std::endl;
+
+      timer.tic();
+      A.convert(Acoo);             //convierte matriz COO a formato CSR
+      timer.toc();
+      std::cout << "Tiempo de conversion de COO a CSR " <<timer.etime() << " ms" << std::endl;
+   }//destruye Acoo*/
+
 
 
 int main(int argc, char const *argv[]) {
@@ -153,6 +189,19 @@ int main(int argc, char const *argv[]) {
     printVector(x);
     cout<<endl<<endl;
 
+    cout<<endl<<"----------------------Precondicionadors  CGM ICHOL----------------------------"<<endl;
+	ICHOL<MatrizCRS> ichol;
+	ichol.calculate(crs);
+	x[0]=.6;
+	x[1]=2.2727;
+	x[2]=-1.1;
+	x[3]=1.875;
+	CGM cgm4;
+	cgm4.solve(crs,x,b,ichol);
+	cgm4.report("pruebaCGMPReJac");
+	printVector(x);
+	cout<<endl<<endl;
+
     cout<<endl<<"----------------------Precondicionadors  BICGSTAB Jacobi----------------------------"<<endl;
     JacobiPrecondicionado<MatrizCRS> jacpBIG;
     jacpBIG.calculate(crs);
@@ -194,6 +243,19 @@ int main(int argc, char const *argv[]) {
     big4.report("pruebaCGMPReMILU");
     printVector(x);
     cout<<endl<<endl;
+
+    cout<<endl<<"----------------------Precondicionadors  BICGSTAB ICHOL----------------------------"<<endl;
+	ICHOL<MatrizCRS> icholBIG;
+	icholBIG.calculate(crs);
+	x[0]=.6;
+	x[1]=2.2727;
+	x[2]=-1.1;
+	x[3]=1.875;
+	BICGSTAB big5;
+	big5.solve(crs,x,b,icholBIG);
+	big5.report("pruebaCGMPReJac");
+	printVector(x);
+	cout<<endl<<endl;
 
     return 0;
 }

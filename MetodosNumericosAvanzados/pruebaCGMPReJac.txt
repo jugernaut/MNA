@@ -1,5 +1,4 @@
-CGM report
-Precondition with: Jacobi Precondicionador
-Iterations: 8
-Error: 1.72036e-07
-Time elapse: 0.024445 msec
+BICGSTAB report
+Iterations: 5
+Error: 1.30903e-19
+Time elapse: 0.035968 msec

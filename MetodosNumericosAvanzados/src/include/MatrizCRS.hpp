@@ -37,6 +37,8 @@ public:
     MatrizCRS ICHOL();
     void JacobiSolve(std::vector<double>& , const std::vector<double>&);
     void LUSolve(std::vector<double>& , const std::vector<double>&);
+    void CHOLSolve(std::vector<double>& , const std::vector<double>&);
+    int transposedElementIndexSearchInCRS(int , int);
 };
 
 #endif

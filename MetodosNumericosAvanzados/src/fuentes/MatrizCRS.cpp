@@ -1,5 +1,6 @@
 #include "../include/MatrizCRS.hpp"
 #include <iostream>
+#include <cmath>
 
 MatrizCRS::MatrizCRS(int n) {
     nnz=0;
@@ -50,32 +51,6 @@ void MatrizCRS::convertCCStoCRS(const MatrizCSC& csc) {
     }
     irow[Col]=nnz;
 
-    /*//Primera version
-        std::vector<int> colAux;
-        colAux.resize(nnz);
-        for (int l = 0; l < Row + 1;l++){
-           for(int k = csc.icol[l]; k < csc.icol[l+1]; k++ ){
-              colAux[k]=l;
-           }
-        }
-
-        std::vector<int> irowAux;
-        irowAux=irow;
-        int i,j,d;
-        double val;
-        for (int l = 0; l < nnz; ++l)
-        {
-            i=csc.row[l];
-            j=colAux[l];
-            val=csc.data[l];
-            d=irowAux[i];
-            data[d]=val;
-            col[d]=j;
-            irowAux[i]++;
-        }*/
-
-
-//Segunda version
     std::vector<int> irowAux;
     irowAux=irow;
     int i,j,d,k;
@@ -255,29 +230,13 @@ void MatrizCRS::JacobiSolve(std::vector<double> & z, const std::vector<double>& 
 void MatrizCRS::LUSolve(std::vector<double> & z, const std::vector<double>& r) {
     std::vector<double> y;
     y.resize(Row);
-    //hacia adelante
-
-    /*std::cout<<"matriz y diag:"<<std::endl;
-    printVector(data);
-    printVector(col);
-    printVector(irow);
-    printVector(idiag);*/
-
 
     for (int i = 0; i < Row; ++i) {
         y[i]=r[i];
-        //for (int l = irow[i]; l <= irow[i+1]-1; ++l)
         for (int l = irow[i]; l < idiag[i]; ++l) {
-            //std::cout<<data[l]<<"/"<<y[col[l]]<<"..."<<l<<std::endl;
             y[i]=y[i]-data[l]*y[col[l]];
-
         }
-        //y[i]/=1.0;
     }
-    /*std::cout<<"vector forward: ";
-    printVector(y);*/
-
-    //hacia atrás
     for (int i = Row-1; i >= 0; --i) {
         z[i]=y[i];
         for (int l = idiag[i]+1; l <= irow[i+1]-1 ; ++l) {
@@ -285,7 +244,93 @@ void MatrizCRS::LUSolve(std::vector<double> & z, const std::vector<double>& r) {
         }
         z[i]/=data[idiag[i]];
     }
-
-    /*std::cout<<"vector backward: ";
-    printVector(z);*/
 }
+
+int MatrizCRS::transposedElementIndexSearchInCRS(int i, int j){
+    if (i==j) return idiag[i];
+   int lside, rside;
+   int pivote;
+   lside = irow[j];
+   rside = idiag[j];
+   while (lside != rside){
+        pivote = (lside+rside)/2;
+        if(i==col[pivote])
+            return pivote;
+        else if (i < col[pivote])
+            rside = pivote;
+        else
+            lside = pivote;
+   }
+   return -1;
+}
+
+MatrizCRS MatrizCRS::ICHOL(){
+    MatrizCRS L;
+    L= *this;
+    int j,lli,llj,ji,jj;
+    double dot;
+    L.data[idiag[0]]=sqrt(data[idiag[0]]);
+    for (int i=0; i < Row; ++i){
+        for (int l = L.irow[i]; l < L.idiag[i];l++ ){
+            j=L.col[l];
+            lli=L.irow[i];
+            llj=L.irow[j];
+            ji=L.col[lli];
+            jj=L.col[llj];
+            L.data[l]=data[l];
+            while (lli<L.irow[i+1] && llj<L.irow[j+1]){
+                if(ji==jj){
+                    if(ji<j && jj < j){
+                        L.data[l]=L.data[l]-L.data[lli]*L.data[llj];//hazard cambiar l por lli
+                    }
+                    lli++;
+                    llj++;
+                    ji=L.col[lli];
+                    jj=L.col[llj];
+                }
+                else if (ji<jj){
+                    lli++;
+                    ji=L.col[lli];
+                }
+                else{
+                    llj++;
+                    jj=L.col[llj];
+                }
+            }
+            L.data[l]=L.data[l]/L.data[idiag[j]];
+        }
+        dot=0;
+        for (int l = L.irow[i]; l < L.idiag[i];l++ )
+        {
+            dot=dot+L.data[l]*L.data[l];
+        }
+        //std::cout<<data[idiag[i]]-dot<<"\n";
+        L.data[idiag[i]]=sqrt(data[idiag[i]]-dot);
+    }
+    return L;
+}
+
+void MatrizCRS::CHOLSolve(std::vector<double> & z, const std::vector<double>& r){
+    std::vector<double> y;
+    y.resize(Row);
+    //Forward substitution
+    for (int i = 0; i < Row; ++i){
+        y[i]=r[i];
+        for (int l = irow[i]; l < idiag[i]; ++l){
+            y[i]-=data[l]*y[col[l]];
+        }
+        y[i]/=1.0;
+    }
+
+    int l;
+    for (int i = Row-1; i >= 0; i--){
+        z[i]=y[i];
+        for (int j = i+1; j < Row ; j++){
+            l=transposedElementIndexSearchInCRS(i,j);
+            if (l != -1)
+                z[i]-=data[l]*z[j];
+        }
+        z[i]/=data[idiag[i]];
+    }
+}
+
