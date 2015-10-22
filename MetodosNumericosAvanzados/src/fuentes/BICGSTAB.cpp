@@ -6,10 +6,10 @@
 void BICGSTAB::report(std::string ruta) {
     std::cout<<"BICGSTAB report: "<<std::endl;
     if(precond)
-        std::cout<<"Precondition with: "<< namep <<std::endl;
-    std::cout<<"Iterations: "<<mits<<std::endl;
+        std::cout<<"Precondicionado con: "<< namep <<std::endl;
+    std::cout<<"Iteraciones: "<<mits<<std::endl;
     std::cout<<"Error: "<< merror <<std::endl;
-    std::cout<< "Time elapse: "<< etime <<" msec" << std::endl;
+    std::cout<< "Tiempo transcurrido: "<< etime <<" msec" << std::endl;
 
     /**************************Escribir a a archivo*******/
     std::ofstream myfile;
@@ -18,10 +18,10 @@ void BICGSTAB::report(std::string ruta) {
     if (myfile.is_open()) {
         myfile<<"BICGSTAB report"<<std::endl;
         if(precond)
-            myfile<<"Precondition with: "<< namep <<std::endl;
-        myfile<<"Iterations: "<<mits<<std::endl;
+            myfile<<"Precondicionado con: "<< namep <<std::endl;
+        myfile<<"Iteraciones: "<<mits<<std::endl;
         myfile<<"Error: "<< merror <<std::endl;
-        myfile<< "Time elapse: "<< etime <<" msec" << std::endl;
+        myfile<< "Tiempo transcurrido: "<< etime <<" msec" << std::endl;
     }
     myfile.close();
 }

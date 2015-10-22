@@ -125,7 +125,8 @@ public:
         merror = sqrt(merror);
         timer.toc();
         etime = timer.etime();
-        precond = false;
+        precond = true;
+        namep = M.name();            //guarda el nombre del precondicionador
     }
 
     void report(std::string);

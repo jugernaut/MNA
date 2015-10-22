@@ -12,7 +12,6 @@ public:
 
     template <class T>
     void solve(T &A, std::vector<double> &x, std::vector<double> &b) {
-        std::cout<<"CGM solve"<<std::endl;
         timer.tic();
         double tol2 = mtol*mtol;
         int n = x.size();

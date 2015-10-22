@@ -63,7 +63,85 @@ int main(int argc, char const *argv[]) {
 
 	Jacobi jac;
 	jac.solve(A,x,b);
-	jac.report("prueba");
+	jac.report("pruebaJacobi");
+	cout<<endl<<"---------------------------------------------------------"<<endl;
+
+	x.resize(n);
+	CGM cgm;
+	cgm.solve(A,x,b);
+	cgm.report("pruebaCGM");
+	cout<<endl<<"---------------------------------------------------------"<<endl;
+
+	x.resize(n);
+	BICGSTAB big;
+	big.solve(A,x,b);
+	big.report("pruebaBIG");
+	cout<<endl<<"---------------------------------------------------------"<<endl;
+
+	cout<<endl<<"------------------Precondicionados-----------------------"<<endl;
+
+	x.resize(n);
+	JacobiPrecondicionado<MatrizCRS> jacp1;
+	jacp1.calculate(A);
+	CGM cgm1;
+	cgm.solve(A,x,b,jacp1);
+	cgm.report("pruebaCGMPreJac");
+	cout<<endl<<"---------------------------------------------------------"<<endl;
+
+	x.resize(n);
+	ICHOL<MatrizCRS> ichol1;
+	ichol1.calculate(A);
+	CGM cgm2;
+	cgm2.solve(A,x,b,ichol1);
+	cgm2.report("pruebaCGMPreIchol");
+	cout<<endl<<"---------------------------------------------------------"<<endl;
+
+	x.resize(n);
+	ILU<MatrizCRS> ilu1;
+	ilu1.calculate(A);
+	CGM cgm3;
+	cgm3.solve(A,x,b,ilu1);
+	cgm3.report("pruebaCGMPreILU");
+	cout<<endl<<"---------------------------------------------------------"<<endl;
+
+	x.resize(n);
+	MILU<MatrizCRS> milu1;
+	milu1.calculate(A);
+	CGM cgm4;
+	cgm4.solve(A,x,b,milu1);
+	cgm4.report("pruebaCGMPreMILU");
+	cout<<endl<<"---------------------------------------------------------"<<endl;
+
+	x.resize(n);
+	JacobiPrecondicionado<MatrizCRS> jacp2;
+	jacp2.calculate(A);
+	BICGSTAB big1;
+	big1.solve(A,x,b,jacp2);
+	big1.report("pruebaBICGSTABPreJac");
+	cout<<endl<<"---------------------------------------------------------"<<endl;
+
+	x.resize(n);
+	ICHOL<MatrizCRS> ichol2;
+	ichol2.calculate(A);
+	BICGSTAB big2;
+	big2.solve(A,x,b,ichol2);
+	big2.report("pruebaBICGSTABPreIchol");
+	cout<<endl<<"---------------------------------------------------------"<<endl;
+
+	x.resize(n);
+	ILU<MatrizCRS> ilu2;
+	ilu2.calculate(A);
+	BICGSTAB big3;
+	big3.solve(A,x,b,ilu2);
+	big3.report("pruebaBICGSTABPreILU");
+	cout<<endl<<"---------------------------------------------------------"<<endl;
+
+	x.resize(n);
+	MILU<MatrizCRS> milu2;
+	milu2.calculate(A);
+	BICGSTAB big4;
+	big4.solve(A,x,b,milu2);
+	big4.report("pruebaBICGSTABPreMILU");
 	cout<<endl<<"---------------------------------------------------------"<<endl;
 
 	return 0;
