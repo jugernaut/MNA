@@ -1,4 +1,4 @@
 Jacobi report
-Iterations: 17
-Error: 7.23043e-07
-Time elapse: 0.055803 msec
+Iterations: 2000
+Error: 0.000927772
+Time elapse: 622773 msec

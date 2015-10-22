@@ -16,43 +16,60 @@
 
 using namespace std;
 
-   /*{
-    Timer timer;                   //mide tiempo de ejecucion
-
-   //llena matriz COO
-   cout<< endl << "Tamanio de problema " << n << "x" <<n<<endl<<endl;
-   int l = 0;
-      COO Acoo(n);                 //matriz temporal en formato de coordenadas
-      timer.tic();                 //comienza a medir tiempo
-      for(int j=1;j<ny;++j)
-      {
-         for(int i=1;i<nx;++i)
-         {
-             // prototipo de funcion de insertar void insert(int i,int j,doble val);
-             if(j>1)
-                Acoo.insert(l, l-(nx-1),-1.);
-             if(i>1)
-                Acoo.insert(l, l-1,-1.);
-             Acoo.insert(l, l,4.);
-             if(i<nx-1)
-                Acoo.insert(l, l+1,-1.);
-             if(j<ny-1)
-                Acoo.insert(l, l+(ny-1),-1.);
-             ++l;
-         }
-      }
-      timer.toc();                 //termina de medir tiempo
-      std::cout << "Tiempo de llenado de matriz   COO: " << timer.etime() << " ms" << std::endl;
-
-      timer.tic();
-      A.convert(Acoo);             //convierte matriz COO a formato CSR
-      timer.toc();
-      std::cout << "Tiempo de conversion de COO a CSR " <<timer.etime() << " ms" << std::endl;
-   }//destruye Acoo*/
-
-
-
 int main(int argc, char const *argv[]) {
+	int nx=1001;
+	int ny=nx;
+	double dx = 1./nx;
+	int n = (nx - 1)*(ny - 1);     //dimension del sistema a resolver
+
+	Timer timer;                   //mide tiempo de ejecucion
+
+	//llena matriz COO
+	cout<< endl << "Tamanio de problema " << n << "x" <<n<<endl<<endl;
+	int l = 0;
+	MatrizCRS A(n);
+
+	{
+	MatrizCOO Acoo(n);                 //matriz temporal en formato de coordenadas
+	timer.tic();                 //comienza a medir tiempo
+	for(int j=1;j<ny;++j){
+		for(int i=1;i<nx;++i){
+		 // prototipo de funcion de insertar void insert(int i,int j,doble val);
+		 if(j>1)
+			Acoo.insert(l, l-(nx-1),-1.);
+		 if(i>1)
+			Acoo.insert(l, l-1,-1.);
+		 Acoo.insert(l, l,4.);
+		 if(i<nx-1)
+			Acoo.insert(l, l+1,-1.);
+		 if(j<ny-1)
+			Acoo.insert(l, l+(ny-1),-1.);
+		 ++l;
+		}
+	}
+	timer.toc();                 //termina de medir tiempo
+	std::cout << "Tiempo de llenado de matriz   COO: " << timer.etime() << " ms" << std::endl;
+
+	timer.tic();
+	A.convert(Acoo);             //convierte matriz COO a formato CSR
+	timer.toc();
+	std::cout << "Tiempo de conversion de COO a CSR " <<timer.etime() << " ms" << std::endl;
+	}//destruye Acoo
+
+	std::vector<double> b(n, 1.*dx*dx);    //a todas las entradas del vector b les asigna el valor 1.*dx*dx
+	std::vector<double> x(n, 0.0);
+	//pruebas
+	cout<<endl<<"----------------------Solvers----------------------------"<<endl;
+
+	Jacobi jac;
+	jac.solve(A,x,b);
+	jac.report("prueba");
+	cout<<endl<<"---------------------------------------------------------"<<endl;
+
+	return 0;
+}
+
+/*int main(int argc, char const *argv[]) {
     MatrizDensa dense;
     int n=4;
     dense.inicializa(n,n,0.0);
@@ -258,4 +275,4 @@ int main(int argc, char const *argv[]) {
 	cout<<endl<<endl;
 
     return 0;
-}
+}*/
